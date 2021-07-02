@@ -12,6 +12,7 @@ apt-get -y install \
     php-imap \
     php-intl \
     php-ssh2 \
+    php-zip \
     php-xml \
     php-xmlrpc \
     nano \
