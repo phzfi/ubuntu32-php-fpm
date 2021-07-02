@@ -30,8 +30,4 @@ ln -sf /var/www/html/web /home/shellp/phz/bedrock-wp
 #Install composer outside WORKDIR since it's not then under shared folder
 #and will be packaged to the image instead out of it
 echo "Install composer"
-if [ ! -x /usr/local/bin/composer ]; then
-    cd /usr/local/bin
-    curl -sS https://getcomposer.org/installer | php
-    ln -sf composer.phar composer
-fi
+curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
