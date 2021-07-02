@@ -1,15 +1,7 @@
 FROM phzfi/ubuntu32:bionic-20200806
-RUN apt-get -y install \
-php-fpm \
-php-mysql \
-php-curl \
-php-gd \
-php-tidy \
-php-memcache \
-php-apcu \
-php-pear \
-php-imap \
-php-intl \
-php-ssh2 \
-php-xml \
-php-xmlrpc
+
+ADD ./scripts/provision.sh provision.sh
+
+RUN provision.sh
+
+CMD ["/usr/sbin/php-fpm7.2", "--fpm-config", "/etc/php/7.2/fpm/php-fpm.conf"]
