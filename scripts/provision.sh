@@ -16,6 +16,9 @@ apt-get -y install \
     php-xml \
     php-xmlrpc \
     nano \
+    wget \
+    git \
+    unzip \
     less \
     curl
 
