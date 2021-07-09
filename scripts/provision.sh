@@ -1,6 +1,12 @@
 #!/bin/bash
+
+apt-get update
+apt-get -y install software-properties-common
+add-apt-repository ppa:ondrej/php
 apt-get update
 apt-get -y install \
+    ssmtp \
+    php8.0 \
     php-fpm \
     php-mysql \
     php-curl \
@@ -27,7 +33,7 @@ chown www-data:www-data /run/php
 
 #hack specific for phz.fi web site compability
 mkdir -p /home/shellp/phz/bedrock-wp/
-ln -sf /var/www/html/web /home/shellp/phz/bedrock-wp
+ln -sf /var/www/html/web/web /home/shellp/phz/bedrock-wp/
 
 #Install composer
 #Install composer outside WORKDIR since it's not then under shared folder

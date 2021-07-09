@@ -20,12 +20,19 @@ This project enables for example Wordpress to be run on 32bit Ubuntu with ubuntu
 
 ### 1.5. Non-Functional Requirements
 
+Sustainability: Run 32bit containers on older hardware to reduce waste of working machines.
+
+Ease of use: Instead of being the most lightweight container out there, this container aims to be developer friendly.
+
+Security: Update security updates regularly
+
 ## 2. Architecture
 
 ### 2.1. Technologies
 
+* PHP-FPM
 * Docker 32bit
-* Ubuntu 18.04 Bionic
+* Ubuntu
 * Jenkins (declarative Jenkinsfile)
 
 ### 2.2. Naming, Terms and Key Concepts
