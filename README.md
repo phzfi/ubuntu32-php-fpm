@@ -35,6 +35,7 @@ Security: Update security updates regularly
 * Docker 32bit
 * Ubuntu (bionic/18.04)
 * Jenkins (declarative Jenkinsfile for Multibranch pipeline)
+* sh2ju for testing
 
 ### 2.2. Naming, Terms and Key Concepts
 
