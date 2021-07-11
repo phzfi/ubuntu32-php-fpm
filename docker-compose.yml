@@ -6,4 +6,3 @@ services:
     volumes:
      - ./reports:/results
      - ./tests:/mnt
-    command: ["/bin/true"]
