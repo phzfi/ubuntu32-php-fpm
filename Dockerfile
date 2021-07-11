@@ -3,6 +3,7 @@ FROM phzfi/ubuntu32:bionic-latest
 WORKDIR /var/www/html/web
 ADD ./scripts/provision.sh ./provision.sh
 ADD ./etc /etc/
+ADD ./tests/* /opt/
 
 RUN ./provision.sh
 
