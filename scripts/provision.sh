@@ -20,13 +20,7 @@ apt-get -y install \
     php-ssh2 \
     php-zip \
     php-xml \
-    php-xmlrpc \
-    nano \
-    wget \
-    git \
-    unzip \
-    less \
-    curl
+    php-xmlrpc
 
 mkdir -p /run/php
 chown www-data:www-data /run/php

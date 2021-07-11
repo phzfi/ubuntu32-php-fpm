@@ -30,10 +30,11 @@ Security: Update security updates regularly
 
 ### 2.1. Technologies
 
+* PHP 8
 * PHP-FPM
 * Docker 32bit
-* Ubuntu
-* Jenkins (declarative Jenkinsfile)
+* Ubuntu (bionic/18.04)
+* Jenkins (declarative Jenkinsfile for Multibranch pipeline)
 
 ### 2.2. Naming, Terms and Key Concepts
 
