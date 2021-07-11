@@ -4,4 +4,4 @@ services:
   app:
     image: phzfi/ubuntu32-php-fpm:latest
     volumes:
-     - ./reports:/results
+     - ./reports:/var/www/html/web/results
