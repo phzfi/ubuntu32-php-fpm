@@ -13,7 +13,7 @@ juLog -name=TestTidyIsInstalled \
    [ `php -i | grep tidy | wc -l` -gt 0 ]
 
 juLog -name=TestAppServerIsRunning \
-   [ `ps aux | grep fpm | grep -v grep |wc -l` -gt 0 ]
+   [ `ps aux | grep php | grep -v grep |wc -l` -gt 0 ]
 
 
 touch results/provision-completed-api.txt
