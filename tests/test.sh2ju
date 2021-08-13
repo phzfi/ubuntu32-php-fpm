@@ -15,6 +15,9 @@ juLog -name=TestTidyIsInstalled \
 juLog -name=TestAppServerIsRunning \
    [ `ps aux | grep php | grep -v grep |wc -l` -gt 0 ]
 
+juLog -name=TestPHP7.4 \
+   [ `php -i|grep "7\.4"|grep Version| wc -l` -gt 0 ]
+
 
 touch results/provision-completed-api.txt
 
