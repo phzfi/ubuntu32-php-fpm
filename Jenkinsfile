@@ -93,7 +93,7 @@ pipeline {
         echo "Running Code Quality checks"
         timeout(15) {
           sh script:"./up.sh", returnStatus:true
-          //sh script:"docker-compose run web syntax-check.sh", returnStatus:true
+          //sh script:"docker exec -it ubuntu32-php-fpm_app_1 /opt/syntax-check.sh", returnStatus:true
         }
 
         updateGitlabCommitStatus name: 'Quality', state: 'success'
@@ -105,7 +105,7 @@ pipeline {
         echo "Running unit tests"       
         timeout(15) {
           //Suppress the exit code so that Jenkins can report the number of failures or mark the build unstable
-          sh "docker-compose run app /opt/test.sh2ju || true"
+          sh "docker exec -it ubuntu32-php-fpm_app_1 /opt/test.sh2ju || true"
           junit 'reports/TEST-default.xml'
         }
 
