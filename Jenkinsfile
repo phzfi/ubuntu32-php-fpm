@@ -130,7 +130,7 @@ pipeline {
   post {
     always {
       script {
-        //sh "./down.sh || true"
+        sh "./down.sh || true"
         sh "sudo chown -R jenkins:jenkins ."
       }
     }
