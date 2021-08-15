@@ -81,6 +81,7 @@ pipeline {
         ]) {
           timeout(400) {
             sh script:"./docker/build.sh ${VERSION} ${DOCKER_HUB_USERNAME} ${DOCKER_HUB_PASSWORD} 7.4", returnStatus:true
+            sh script:"./docker/build.sh ${VERSION} ${DOCKER_HUB_USERNAME} ${DOCKER_HUB_PASSWORD} 8.0", returnStatus:true
           }
         }
 

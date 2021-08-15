@@ -2,9 +2,10 @@ FROM phzfi/ubuntu32:bionic-latest
 
 WORKDIR /var/www/html/web
 ADD ./scripts/provision.sh ./provision.sh
+ADD ./scripts/install-php7.4.sh ./install-php7.4.sh
 ADD ./tests/* /opt/
 
-RUN ./provision.sh
+RUN ./provision.sh && ./install-php7.4.sh
 
 ADD ./etc /etc/
 
