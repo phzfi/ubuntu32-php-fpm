@@ -94,7 +94,7 @@ pipeline {
         echo "Running Code Quality checks"
         timeout(15) {
           sh script:"./up.sh", returnStatus:true
-          //sh script:"docker exec -it ubuntu32-php-fpm_app_1 /opt/syntax-check.sh", returnStatus:true
+          //sh script:"docker exec -it ubuntu32-php-fpm_master_app_1 /opt/syntax-check.sh", returnStatus:true
         }
 
         updateGitlabCommitStatus name: 'Quality', state: 'success'
