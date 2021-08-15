@@ -2,7 +2,7 @@
 
 apt-get -y install \
     php8.0 \
-    php-fpm \
+    php8.0-fpm \
     php-mysql \
     php-curl \
     php-gd \

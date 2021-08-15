@@ -2,7 +2,7 @@
 
 apt-get -y install \
     php7.4 \
-    php-fpm \
+    php7.4-fpm \
     php-mysql \
     php-curl \
     php-gd \
