@@ -30,7 +30,8 @@ Security: Update security updates regularly
 
 ### 2.1. Technologies
 
-* PHP 8
+* PHP 7.4
+	* PHP 8.0 support is work in progress
 * PHP-FPM
 * Docker 32bit
 * Ubuntu (bionic/18.04)
@@ -107,4 +108,6 @@ Run
 ### 6.2 Manual Processes
 
 ## 7. Problems
+
+PHP 8.0 support is broken.
 

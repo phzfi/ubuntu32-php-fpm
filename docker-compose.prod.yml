@@ -2,7 +2,7 @@ version: '3.5'
 services:
   #mock container for smoke testing in CI
   app:
-    image: phz/ubuntu32-php-fpm:7.4-dev
+    image: phzfi/ubuntu32-php-fpm:7.4-latest
     volumes:
      - ./reports:/var/www/html/web/results
     #command: ["tail", "-F", "/dev/null"] # keep container running for testing

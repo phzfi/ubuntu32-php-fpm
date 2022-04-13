@@ -1,11 +1,11 @@
-FROM phzfi/ubuntu32:bionic-latest
+#FROM phzfi/ubuntu32:bionic-latest # is actually linux/amd64
+FROM phzfi/ubuntu32:bionic-20211118
 
 WORKDIR /var/www/html/web
 ADD ./scripts/provision.sh ./provision.sh
-ADD ./scripts/install-php8.0.sh ./install-php8.0.sh
 ADD ./tests/* /opt/
 
-RUN ./provision.sh && ./install-php8.0.sh
+RUN ./provision.sh 8.0
 
 ADD ./etc /etc/
 
