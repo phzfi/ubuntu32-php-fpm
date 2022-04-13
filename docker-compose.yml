@@ -3,6 +3,10 @@ services:
   #mock container for smoke testing in CI
   app:
     image: phz/ubuntu32-php-fpm:7.4-dev
+  test:
+    image: phz/ubuntu32-php-fpm:7.4-dev
     volumes:
      - ./reports:/var/www/html/web/results
+    # simply running test.sh2ju would override the Dockerfile php-fpm start CMD
+    command: ["sh", "-c", "/usr/sbin/php-fpm7.4 --daemonize --fpm-config /etc/php/7.4/fpm/php-fpm.conf && /opt/test.sh2ju"]
     #command: ["tail", "-F", "/dev/null"] # keep container running for testing

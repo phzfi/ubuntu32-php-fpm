@@ -105,8 +105,7 @@ pipeline {
       steps {
         echo "Running unit tests"       
         timeout(15) {
-          //Suppress the exit code so that Jenkins can report the number of failures or mark the build unstable
-          sh "docker exec -it ubuntu32-php-fpm_master_app_1 /opt/test.sh2ju || true"
+          sh script:"docker-compose run test", returnStatus:true
           junit 'reports/TEST-default.xml'
         }
 
