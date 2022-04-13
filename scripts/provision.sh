@@ -1,17 +1,26 @@
-#!/bin/bash
+#!/bin/sh
 
+# use first argument or fallback to 7.4
+php_version=${1:-7.4}
+php=php${php_version}
+
+# FIXME: this installs both $php-version and 8.1 (latest release?)
 apt-get update
 apt-get -y install software-properties-common
 add-apt-repository ppa:ondrej/php
 apt-get update
 apt-get -y install \
     ssmtp \
-    php7.4 \
+    git \
+    curl \
+    bc \
+    "$php" \
+    "$php"-fpm \
     php-fpm \
     php-mysql \
     php-curl \
     php-gd \
-    php-tidy \
+    "$php"-tidy \
     php-memcache \
     php-apcu \
     php-pear \
@@ -22,10 +31,21 @@ apt-get -y install \
     php-xml \
     php-xmlrpc
 
+# Set default PHP version just in case
+update-alternatives --set php "/usr/bin/php${php_version}"
+update-alternatives --set phar "/usr/bin/phar${php_version}"
+update-alternatives --set phar.phar "/usr/bin/phar.phar${php_version}"
+#update-alternatives --set phpize "/usr/bin/phpize${php_version}"
+#update-alternatives --set php-config "/usr/bin/php-config${php_version}"
+
+# Install sh2ju, a JUnit compliant test framework for Bash
+# See http://manolocarrasco.blogspot.fi/2010/02/hudson-publish-bach.html
+git -C /usr/src clone https://github.com/manolo/shell2junit.git
+
 mkdir -p /run/php
 chown www-data:www-data /run/php
 
-#hack specific for phz.fi web site compability
+#hack specific for phz.fi web site compability # TODO useless?
 mkdir -p /home/shellp/phz/bedrock-wp/
 ln -sf /var/www/html/web/web /home/shellp/phz/bedrock-wp/
 
