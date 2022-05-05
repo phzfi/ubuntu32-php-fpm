@@ -1,3 +1,3 @@
 #!/bin/sh
 
-rm ./reports/* || true
+rm ./reports/*

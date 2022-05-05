@@ -46,7 +46,7 @@ pipeline {
         }
         echo "Changelog:\n${CHANGELOG}"
         sh "./down.sh || true"
-        sh "./clean.sh"
+        sh "./clean.sh || true"
         sh "sudo chown -R jenkins:jenkins ."
 
         echo "Debug branch name"
@@ -104,7 +104,7 @@ pipeline {
 
     stage("Unit Test") {
       steps {
-        echo "Running unit tests"       
+        echo "Running unit tests"
         timeout(15) {
           sh script:"docker-compose -f docker-compose.prod.yml run test", returnStatus:true
           junit 'reports/TEST-default.xml'
