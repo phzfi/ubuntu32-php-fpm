@@ -80,8 +80,8 @@ pipeline {
           [$class: 'UsernamePasswordMultiBinding', credentialsId: 'DOCKER_HUB', usernameVariable: 'DOCKER_HUB_USERNAME', passwordVariable: 'DOCKER_HUB_PASSWORD']
         ]) {
           timeout(400) {
-            sh script:"./docker/build.sh ${VERSION} ${DOCKER_HUB_USERNAME} ${DOCKER_HUB_PASSWORD} 7.4", returnStatus:true
-            sh script:"./docker/build.sh ${VERSION} ${DOCKER_HUB_USERNAME} ${DOCKER_HUB_PASSWORD} 8.0", returnStatus:true
+            sh script:"./docker/build.sh prod 7.4 ${VERSION} ${DOCKER_HUB_USERNAME} ${DOCKER_HUB_PASSWORD}", returnStatus:true
+            sh script:"./docker/build.sh prod 8.0 ${VERSION} ${DOCKER_HUB_USERNAME} ${DOCKER_HUB_PASSWORD}", returnStatus:true
           }
         }
 
