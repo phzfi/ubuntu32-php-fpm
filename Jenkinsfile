@@ -93,7 +93,8 @@ pipeline {
       steps {
         echo "Running Code Quality checks"
         timeout(15) {
-          sh script:"./up.sh", returnStatus:true
+          sh script:"docker-compose -f docker-compose.prod.yml up -d", returnStatus:true
+          //sh script:"./up.sh", returnStatus:true
           //sh script:"docker exec -it ubuntu32-php-fpm_master_app_1 /opt/syntax-check.sh", returnStatus:true
         }
 
@@ -105,7 +106,7 @@ pipeline {
       steps {
         echo "Running unit tests"       
         timeout(15) {
-          sh script:"docker-compose run test", returnStatus:true
+          sh script:"docker-compose -f docker-compose.prod.yml run test", returnStatus:true
           junit 'reports/TEST-default.xml'
         }
 
