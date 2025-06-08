@@ -1,6 +1,6 @@
 # ubuntu32-php-fpm
 
-For https://hub.docker.com/r/phzfi/ubuntu32-php-fpm
+Available on Docker Hub: https://hub.docker.com/r/phzfi/ubuntu32-php-fpm
 
 ## 1. Project Description
 
@@ -30,8 +30,9 @@ Security: Update security updates regularly
 
 ### 2.1. Technologies
 
-* PHP 7.4
-	* PHP 8.0 support is work in progress
+* PHP 
+** 7.4 available on tag :7.4-latest
+** 8.0 available on tag :8.0-latest
 * PHP-FPM
 * Docker 32bit
 * Ubuntu (bionic/18.04)
