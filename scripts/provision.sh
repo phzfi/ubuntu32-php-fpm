@@ -2,7 +2,7 @@
 
 # use first argument or fallback to 7.4
 php_version=${1:-7.4}
-php=php${php_version}
+php=php-${php_version}
 
 # FIXME: this installs both $php-version and 8.1 (latest release?)
 apt-get update
