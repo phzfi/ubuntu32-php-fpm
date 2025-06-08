@@ -1,4 +1,4 @@
-version: '3.5'
+#Docker swarm
 services:
   #mock container for smoke testing in CI
   app:
