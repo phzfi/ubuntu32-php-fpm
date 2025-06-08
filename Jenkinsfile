@@ -3,7 +3,7 @@ def PROJECT_NAME = "ubuntu32-php-fpm"
 def SLACK_CHANNEL = "#marketing"
 pipeline {
   agent {
-    label 'docker'
+    label 'slave && docker'
   }
 
   environment {
@@ -17,14 +17,18 @@ pipeline {
     ansiColor('xterm')
     gitLabConnection('ubuntu32')
     //skipDefaultCheckout(true)
+    //set default pipeline timeout to 3hours if there is a jam, it will abort automatically
+    timeout(time: 180, unit: 'MINUTES')
   }
 
   triggers {
     gitlab(triggerOnPush: true, triggerOnMergeRequest: true, branchFilterType: 'All')
+    //TODO scheduled builds every month or week does the security updates + promotes activity
+    //pollSCM('H/5 8-20 1-6 * *')
   }
 
   stages {
-    stage("Clean") {
+    stage("Prepare") {
       steps {
         script {
           echo "Parse changelog"
@@ -45,9 +49,6 @@ pipeline {
           }
         }
         echo "Changelog:\n${CHANGELOG}"
-        sh "./down.sh || true"
-        sh "./clean.sh || true"
-        sh "sudo chown -R jenkins:jenkins ."
 
         echo "Debug branch name"
         echo "env.gitlabBranch: " + env.gitlabBranch
@@ -57,6 +58,16 @@ pipeline {
 
         checkout scm
         updateGitlabCommitStatus name: 'Clean', state: 'success'
+      }
+    }
+
+    stage("Clean") {
+      steps {
+        script {
+          sh "./down.sh > /dev/null 2>&1 || true"
+          sh "./clean.sh > /dev/null 2>&1 || true"
+          sh "sudo chown -R jenkins:jenkins ."
+        }
       }
     }
 
@@ -71,7 +82,7 @@ pipeline {
       }
     }
 
-    stage("Build & Publish") {
+    stage("Build") {
       when {
         expression {[master: true, develop: true].get(BRANCH_NAME, false)}
       }
@@ -82,6 +93,7 @@ pipeline {
           timeout(400) {
             sh script:"./docker/build.sh prod 7.4 ${VERSION} ${DOCKER_HUB_USERNAME} ${DOCKER_HUB_PASSWORD}", returnStatus:true
             sh script:"./docker/build.sh prod 8.0 ${VERSION} ${DOCKER_HUB_USERNAME} ${DOCKER_HUB_PASSWORD}", returnStatus:true
+            sh script:"./docker/build.sh prod 8.1 ${VERSION} ${DOCKER_HUB_USERNAME} ${DOCKER_HUB_PASSWORD}", returnStatus:true
           }
         }
 
@@ -125,8 +137,29 @@ pipeline {
         updateGitlabCommitStatus name: 'Acceptance Test', state: 'success'
       }
     }
-  }
 
+    stage("Tag") {
+      steps {
+        withCredentials([sshUserPrivateKey(credentialsId: 'git-ssh-ci', keyFileVariable: 'SSH_KEY')]) {
+          script {
+            if (env.BUILD_ENV != 'dev') {
+              sshagent(credentials: ['git-ssh-ci']) {
+                sh('set +x && '
+                + 'TAG_NAME="' + env.BUILD_ENV + '-' + env.VERSION + '" && '
+                + 'git tag -d $TAG_NAME || true && ' // delete 'exists' tag from local git repository. (if previous push failed)
+                + 'git tag -a $TAG_NAME -m Jenkins && '   // create new tag.
+                + 'git push origin $TAG_NAME --no-verify' // push the new tag.
+                )
+              }
+            } else {
+              echo "Skipping Git Tag for git development branches..."
+            }
+          }
+        }
+      }
+    }
+
+  }
   post {
     always {
       script {
@@ -136,11 +169,6 @@ pipeline {
     }
     success {
       script {
-        if ([master: true, develop: true].get(BRANCH_NAME, false)) {
-          //TODO fatal: could not read Username for 'http://git.in.phz.fi': No such device or address
-          //sh "git tag -a -m \"${env.BUILD_ENV}-${env.BUILD_NUMBER}\" ${env.BUILD_ENV}-${env.BUILD_NUMBER}"
-          //sh "git push --tags"
-
           //slackSend channel: "${SLACK_CHANNEL}", color: "green", message: "${PROJECT_NAME} ${env.BUILD_ENV}-${env.BUILD_NUMBER} build succeeded! Please download container for Smoke Testing: ${PROJECT_LOCATION}). After Smoke Tests (see README.md #4.1), please Add Reaction thumbsup or thumbsdown depending whether Smoke Test cases pass or not.\n${CHANGELOG}", notifyCommitters: true
         }
       }
